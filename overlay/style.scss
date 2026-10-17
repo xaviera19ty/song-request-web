@@ -1,0 +1,148 @@
+// OBS 疊加層樣式。背景一律透明，文字加陰影，疊在任何畫面上都看得清楚。
+$coral: #ef5b45;
+$gold: #f5c451;
+
+@mixin shadow-text {
+  text-shadow: 0 1px 2px rgb(0 0 0 / 60%), 0 0 12px rgb(0 0 0 / 35%);
+}
+
+html,
+body {
+  margin: 0;
+  background: transparent;
+  overflow: hidden;
+}
+
+#overlay {
+  font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  padding: 12px;
+  width: max-content;
+  max-width: calc(100vw - 24px);
+
+  &[data-theme="dark"] {
+    --fg: #fff;
+    --muted: #d8d6f0;
+    --panel: rgb(16 15 33 / 72%);
+  }
+
+  &[data-theme="light"] {
+    --fg: #1b1a33;
+    --muted: #4f4b80;
+    --panel: rgb(255 255 255 / 85%);
+  }
+
+  color: var(--fg);
+}
+
+.label {
+  margin: 8px 0 2px;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  @include shadow-text;
+}
+
+.now {
+  padding: 10px 16px;
+  border-left: 4px solid $coral;
+  border-radius: 10px;
+  background: var(--panel);
+  animation: slide-in 0.45s ease-out;
+
+  .label {
+    margin-top: 0;
+  }
+
+  .title {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+    @include shadow-text;
+  }
+
+  .idle {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .meta {
+    margin: 2px 0 0;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  // 付費點歌：金色邊框與微微發光
+  &.paid {
+    border-left-color: $gold;
+    box-shadow: 0 0 18px rgb(245 196 81 / 45%);
+  }
+}
+
+.next {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: next;
+
+  li {
+    counter-increment: next;
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    margin-top: 4px;
+    padding: 4px 12px;
+    border-radius: 8px;
+    background: var(--panel);
+    animation: slide-in 0.45s ease-out backwards;
+    @include shadow-text;
+
+    &::before {
+      content: counter(next);
+      color: $coral;
+      font-weight: 700;
+    }
+
+    &.paid::before {
+      color: $gold;
+    }
+
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.06}s;
+      }
+    }
+  }
+
+  .title {
+    font-weight: 600;
+  }
+
+  .meta {
+    font-size: 13px;
+    color: var(--muted);
+  }
+}
+
+.message {
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--panel);
+  font-size: 14px;
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+}
+
+// OBS 或系統設定減少動態效果時不做動畫
+@media (prefers-reduced-motion: reduce) {
+  .now,
+  .next li {
+    animation: none;
+  }
+}

@@ -1,0 +1,10 @@
+node_modules/
+.nuxt/
+.output/
+.data/
+dist/
+# 疊加層的建置結果（pnpm overlay:build 產生）
+public/overlay/
+.env
+.idea/
+.vscode/*

@@ -1,0 +1,5 @@
+# pnpm 預設會擋下套件的安裝腳本；這裡明確列出放行或不放行的套件
+allowBuilds:
+  esbuild: true
+  # sass 的檔案監看器，已經有預先編譯好的版本，不需要跑安裝腳本
+  "@parcel/watcher": false

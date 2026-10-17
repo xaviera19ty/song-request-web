@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+/* 深色模式由 <html class="dark"> 切換 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * 品牌色：珊瑚粉（舞台燈）＋ 深靛（夜晚直播間）。
+ * 頁面只寫語意色（surface、card、ink…），深淺色只在下面換值。
+ */
+@theme {
+  --color-coral-50: #fff4f2;
+  --color-coral-100: #ffe4df;
+  --color-coral-200: #ffc9bf;
+  --color-coral-300: #ffa293;
+  --color-coral-400: #fb7a66;
+  --color-coral-500: #ef5b45;
+  --color-coral-600: #d1412c;
+  --color-coral-700: #ad3222;
+
+  --color-night-50: #f4f4fa;
+  --color-night-100: #e7e6f3;
+  --color-night-200: #cfcde6;
+  --color-night-400: #8a86b8;
+  --color-night-600: #4f4b80;
+  --color-night-700: #3b3866;
+  --color-night-800: #29274a;
+  --color-night-900: #1b1a33;
+  --color-night-950: #100f21;
+
+  --color-twitch: #9146ff;
+  --color-youtube: #ff0033;
+
+  --color-surface: var(--color-night-50);
+  --color-card: #ffffff;
+  --color-hover: var(--color-night-100);
+  --color-line: var(--color-night-200);
+  --color-ink: var(--color-night-900);
+  --color-heading: var(--color-night-800);
+  --color-muted: var(--color-night-600);
+  --color-accent: var(--color-coral-600);
+  --color-danger: #c42b47;
+  --color-ok: #2f8f5b;
+}
+
+@layer base {
+  :root.dark {
+    color-scheme: dark;
+    --color-surface: var(--color-night-950);
+    --color-card: var(--color-night-900);
+    --color-hover: var(--color-night-800);
+    --color-line: var(--color-night-700);
+    --color-ink: var(--color-night-100);
+    --color-heading: #ffffff;
+    --color-muted: var(--color-night-400);
+    --color-accent: var(--color-coral-400);
+    --color-danger: #ff7a90;
+    --color-ok: #6fd39c;
+  }
+
+  body {
+    @apply bg-surface text-ink antialiased transition-colors;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-coral-400;
+  }
+}
